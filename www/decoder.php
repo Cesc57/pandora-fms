@@ -15,7 +15,7 @@ function decodeScore($numSystem, $encodedScore)
     return $score;
 }
 
-$filename = 'assets/encryptedScore.csv';
+$filename = 'data/encryptedScore.csv';
 $scores = [];
 
 if (($handle = fopen($filename, 'r')) !== FALSE) {
