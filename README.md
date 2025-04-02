@@ -50,7 +50,7 @@ Start containers in detached mode:
 
 Run the decoder.php script:
 ```bash
-make decode
+  make decode
 ```
 
 Stop and remove containers:
