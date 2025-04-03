@@ -50,10 +50,40 @@ Start containers in detached mode:
 
 Run the decoder.php script:
 ```bash
-  make decode
+  make decoder
 ```
 
 Stop and remove containers:
 ```bash
     make down
 ```
+
+# Exercise 2 Appointment register
+
+```bash
+   docker cp www/database/create_tables.sql mysql_db:create_tables.sql
+```
+
+```bash
+  docker exec -it mysql_db bash
+```
+
+```bash
+  mysql -u root -p
+```
+
+```
+rootpass
+```
+
+```bash
+  source /create_tables.sql;
+```
+
+##MAKEFILE
+
+```bash
+  make init-db
+```
+
+http://localhost:8080/

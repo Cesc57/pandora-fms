@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<h1>Book an Appointment</h1>
+
+<form id="appointment-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required minlength="3" pattern="[A-Za-záéíóúÁÉÍÓÚüÜ\s]+"><br>
+
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" name="dni" pattern="^[0-9]{8}[A-Za-z]$" required><br>
+
+
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone" pattern="[0-9]{9}" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="appointment-type">Appointment Type:</label>
+    <select id="appointment-type" name="appointment-type" required>
+        <option value="first-consultation">Primera consulta</option>
+    </select><br>
+
+    <button type="submit" id="submit-btn" disabled>Book Appointment</button>
+</form>
+
+<div id="response-message"></div>
+
+<script>
+    $(document).ready(function () {
+        function checkFormCompletion() {
+            var isComplete = true;
+            $('#appointment-form input, #appointment-form select').each(function () {
+                if ($(this).val() === '') {
+                    isComplete = false;
+                }
+            });
+            $('#submit-btn').prop('disabled', !isComplete);
+        }
+
+        $('#dni').on('blur', function () {
+            var dni = $(this).val();
+            $.ajax({
+                url: './database/check_dni.php',
+                method: 'POST',
+                data: {dni: dni},
+                success: function (response) {
+                    if (response == 'exists') {
+                        $('#appointment-type').html('<option value="first-consultation">Primera consulta</option><option value="follow-up">Revisión</option>');
+                    } else {
+                        $('#appointment-type').html('<option value="first-consultation">Primera consulta</option>');
+                    }
+                    checkFormCompletion();
+                }
+            });
+        });
+
+        $('#appointment-form input, #appointment-form select').on('input', function () {
+            checkFormCompletion();
+        });
+
+        $('#appointment-form').on('submit', function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                url: './database/submit_appointment.php',
+                method: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response) {
+                        $('#response-message').html(response).show();
+
+                        setTimeout(function () {
+                            $('#response-message').fadeOut();
+                        }, 3000);
+                    } else {
+                        $('#response-message').hide();
+                    }
+                    $('#appointment-form')[0].reset();
+                    $('#appointment-type').html('<option value="first-consultation">Primera consulta</option>');
+                    $('#submit-btn').prop('disabled', true);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
