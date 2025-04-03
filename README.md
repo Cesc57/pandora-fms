@@ -1,4 +1,6 @@
-# Exercise 1 Score Decoder
+# Technical test Pandora FMS
+
+## Exercise 1 Score Decoder
 
 This project reads a CSV file containing user data, their numeric system, and encoded scores. The `decoder.php` script decodes the scores and sorts them from highest to lowest.
 
@@ -6,7 +8,6 @@ This project reads a CSV file containing user data, their numeric system, and en
 
 - **decoder.php**: PHP script that decodes the scores.
 - **assets/encryptedScore.csv**: CSV file that contains the encoded scores.
-- **Dockerfile** (if you are using Docker to run the project).
 
 ## Instructions
 
@@ -60,6 +61,18 @@ Stop and remove containers:
 
 # Exercise 2 Appointment register
 
+This project manages appointment records by storing and organizing scheduled meetings.
+
+- **submit_appointment.php**: PHP script that handles appointment submissions.
+
+- **check_dni.php**: PHP script that verifies user DNI.
+
+- **database/create_tables.sql**: SQL file that creates the necessary database tables.
+
+- **includes/db_connection.php**: PHP file that manages the database connection.
+
+- **assets/css/styles.css**: Stylesheet for the project.
+
 ```bash
    docker cp www/database/create_tables.sql mysql_db:create_tables.sql
 ```
@@ -80,10 +93,10 @@ rootpass
   source /create_tables.sql;
 ```
 
-##MAKEFILE
+## MAKEFILE
 
 ```bash
   make init-db
 ```
-
+Insert in your preferred browser:
 http://localhost:8080/
